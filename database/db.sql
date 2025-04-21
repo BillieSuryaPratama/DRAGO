@@ -30,7 +30,7 @@ REFERENCES Jabatan(ID_Jabatan);
 -- Insert Jabatan
 INSERT INTO Jabatan (Nama_Jabatan) VALUES
 ('Admin'),
-('Petani A');
+('Petani');
 
 -- Insert Akun
 INSERT INTO Akun (Nama, Alamat, Nomor_HP, Username, Email, Sandi, Status_Akun, ID_Jabatan) VALUES
