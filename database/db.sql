@@ -5,7 +5,7 @@ USE DRAGO;
 CREATE TABLE IF NOT EXISTS Jabatan(
     ID_Jabatan BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     Nama_Jabatan VARCHAR(10) NOT NULL
-)
+);
 
 CREATE TABLE IF NOT EXISTS Akun(
     ID_Akun BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS Akun(
     Nomor_HP VARCHAR(20) NOT NULL,
     Username VARCHAR(20) NOT NULL UNIQUE,
     Email VARCHAR(255) NOT NULL,
-    Sandi VARCHAR(255) NOT NULL,
+    Sandi VARCHAR(12) NOT NULL,
     Status_Akun BOOLEAN DEFAULT TRUE,
     ID_Jabatan BIGINT UNSIGNED NOT NULL --fk
 );
@@ -34,8 +34,8 @@ INSERT INTO Jabatan (Nama_Jabatan) VALUES
 
 -- Insert Akun
 INSERT INTO Akun (Nama, Alamat, Nomor_HP, Username, Email, Sandi, Status_Akun, ID_Jabatan) VALUES
-('Ahmad Saputra', 'Jl. Merdeka No.10', '081234567890', 'ahmads', 'ahmad@example.com', 'hashed_password_1', TRUE, 1),
-('Siti Aminah', 'Jl. Sawah Indah', '081223344556', 'sitiaminah', 'siti@example.com', 'hashed_password_2', TRUE, 2),
-('Budi Santoso', 'Jl. Desa Baru', '081334455667', 'budis', 'budi@example.com', 'hashed_password_3', TRUE, 2),
-('Rina Kartika', 'Jl. Padi Makmur', '081445566778', 'rinak', 'rina@example.com', 'hashed_password_4', TRUE, 2);
+('Ahmad Saputra', 'Jl. Merdeka No.10', '081234567890', 'ahmads', 'ahmad@example.com', 'admin123', TRUE, 1),
+('Siti Aminah', 'Jl. Sawah Indah', '081223344556', 'sitiaminah', 'siti@example.com', 'akukaya', TRUE, 2),
+('Budi Santoso', 'Jl. Desa Baru', '081334455667', 'budis', 'budi@example.com', 'akira77', TRUE, 2),
+('Rina Kartika', 'Jl. Padi Makmur', '081445566778', 'rinak', 'rina@example.com', 'hellow', TRUE, 2);
 
