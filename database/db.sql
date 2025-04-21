@@ -24,3 +24,18 @@ ALTER TABLE Akun
 ADD CONSTRAINT fk_jabatan
 FOREIGN KEY (ID_Jabatan)
 REFERENCES Jabatan(ID_Jabatan);
+
+
+-- Nanti di Hapus yo (dummy data)
+-- Insert Jabatan
+INSERT INTO Jabatan (Nama_Jabatan) VALUES
+('Admin'),
+('Petani A');
+
+-- Insert Akun
+INSERT INTO Akun (Nama, Alamat, Nomor_HP, Username, Email, Sandi, Status_Akun, ID_Jabatan) VALUES
+('Ahmad Saputra', 'Jl. Merdeka No.10', '081234567890', 'ahmads', 'ahmad@example.com', 'hashed_password_1', TRUE, 1),
+('Siti Aminah', 'Jl. Sawah Indah', '081223344556', 'sitiaminah', 'siti@example.com', 'hashed_password_2', TRUE, 2),
+('Budi Santoso', 'Jl. Desa Baru', '081334455667', 'budis', 'budi@example.com', 'hashed_password_3', TRUE, 2),
+('Rina Kartika', 'Jl. Padi Makmur', '081445566778', 'rinak', 'rina@example.com', 'hashed_password_4', TRUE, 2);
+
