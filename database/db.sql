@@ -66,5 +66,5 @@ INSERT INTO Penyakit (Nama_Penyakit, Solusi) VALUES
 ('Bercak Coklat', 'Gunakan fungisida sistemik dan tingkatkan ventilasi pada area tanaman.'),
 ('Hawar', 'Semprotkan fungisida berbahan aktif boskalid atau fluopyram. Hindari penyiraman berlebihan.'),
 ('Sehat', 'Tidak ada penanganan diperlukan. Lanjutkan perawatan dan pemantauan rutin.'),
-('Busuk', 'Cabut dan musnahkan tanaman yang membusuk. Sterilisasi tanah dan semprotkan bakterisida atau fungisida.'),
+('Busuk Batang', 'Cabut dan musnahkan tanaman yang membusuk. Sterilisasi tanah dan semprotkan bakterisida atau fungisida.'),
 ('Kanker Batang', 'Pangkas area yang terkena kanker. Semprotkan fungisida, dan hindari luka mekanis pada batang.');
