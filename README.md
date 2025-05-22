@@ -4,7 +4,7 @@ DRAGO adalah web yang berfungsi sebagai antarmuka utama untuk mendeteksi penyaki
 
 ---
 
-## ⚙Teknologi yang Digunakan
+## Teknologi yang Digunakan
 
 - Laravel 12 (PHP Framework)
 - Blade Template Engine
