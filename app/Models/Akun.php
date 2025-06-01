@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Akun extends Model
 {
@@ -36,5 +37,11 @@ class Akun extends Model
 
     public function Penjadwalan(){
         return $this->hasMany(Penjadwalan::class, 'ID_Akun');
+    }
+
+    public function getDataAkun()
+    {
+        $DataAkun = DB::table('akun')->get();
+        return $DataAkun;
     }
 }
