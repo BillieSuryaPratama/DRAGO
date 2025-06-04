@@ -83,7 +83,7 @@
         });
 
         confirmBtn.addEventListener('click', () => {
-            logoutForm.submit();
+            deleteForm.submit();
         });
     });
 </script>

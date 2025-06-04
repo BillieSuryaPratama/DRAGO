@@ -69,4 +69,17 @@ class Akun extends Model
     {
         DB::table('akun')->where('ID_Akun', $id)->delete();
     }
+
+    public function updateDataAkun(Request $request, $id)
+    {
+        DB::table('akun')->where('ID_Akun', $id)->update([
+            'Nama' => $request->Nama,
+            'Alamat' => $request->Alamat,
+            'Nomor_HP' => $request->Nomor_HP,
+            'Username' => $request->Username,
+            'Email' => $request->Email,
+            'Sandi' => $request->Sandi,
+            'updated_at' => now(),
+        ]);
+    }
 }

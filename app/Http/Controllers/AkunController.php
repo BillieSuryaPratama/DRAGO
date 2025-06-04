@@ -35,6 +35,12 @@ class AkunController extends Controller
         return view('halAkun', compact('akun', 'id_akun', 'id_jabatan'));
     }
 
+    public function showHalFormUbahData($id)
+    {
+        $akun = (new Akun())->getDataAkun($id);
+        return view('halFormUbahData', compact('akun'));
+    }
+
     public function Simpan(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -54,6 +60,36 @@ class AkunController extends Controller
             $akun = new Akun();
             $akun->insertDataAkun($request);
             return redirect()->route('showHalPetani')->with('success', 'Akun berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Format data harus sesuai'])->withInput();
+        }
+    }
+
+    public function SimpanPerubahan(Request $request)
+    {
+        $id_akun = session('id_akun');
+        $validator = Validator::make($request->all(), [
+            'Nama' => ['required', 'string', 'max:50', 'regex:/^[A-Za-z\s]+$/'],
+            'Alamat' => 'required|string|max:50',
+            'Nomor_HP' => 'required|digits_between:10,15',
+            'Username' => 'required|string|max:20',
+            'Email' => 'required|string|max:255|email',
+            'Sandi' => 'required|string|max:15',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors(['error' => 'Format data harus sesuai'])->withInput();
+        }
+
+        try {
+            $akun = new Akun();
+            $akun->updateDataAkun($request, $id_akun);
+            $id_jabatan = session('id_jabatan');
+            if ($id_jabatan == 1) {
+                return redirect()->route('showHalAkunPemilik')->with('success', 'Akun berhasil diupdate.');
+            } else {
+                return redirect()->route('showHalAkunPetani')->with('success', 'Akun berhasil diupdate.');
+            }
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Format data harus sesuai'])->withInput();
         }

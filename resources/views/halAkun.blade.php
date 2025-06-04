@@ -11,7 +11,7 @@
                     <p class="text-gray-600 text-lg">{{ $akun->Email }}</p>
                 </div>
             </div>
-            <a href="" class="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600">Edit</a>
+            <a href="{{ route('showHalFormUbahData', $akun->ID_Akun) }}" class="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600">Edit</a>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">

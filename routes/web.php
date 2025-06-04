@@ -21,9 +21,10 @@ Route::get('/DashboardPetani', [LoginController::class, 'DashboardPetani'])->nam
 
 Route::get('/halPetani', [AkunController::class, 'showHalPetani'])->name('showHalPetani');
 Route::get('/halDetailPetani/{id}', [AkunController::class, 'showHalDetailPetani'])->name('showHalDetailPetani');
-Route::delete('/hapusAkun/{id}', [AkunController::class, 'hapusAkun'])->name('hapusAkun');
+Route::delete('/hapus-akun/{id}', [AkunController::class, 'hapusAkun'])->name('hapusAkun');
 Route::get('/halTambahPetani', [AkunController::class, 'showHalTambahAkunPetani'])->name('showHalTambahAkunPetani');
 Route::post('/tambah-petani', [AkunController::class, 'Simpan'])->name('Simpan');
 Route::get('/halAkunPemilik', [AkunController::class, 'showHalAkun'])->name('showHalAkunPemilik');
 Route::get('/halAkunPetani', [AkunController::class, 'showHalAkun'])->name('showHalAkunPetani');
-
+Route::get('/halFormUbahData/{id}', [AkunController::class, 'showHalFormUbahData'])->name('showHalFormUbahData');
+Route::post('/update-akun', [AkunController::class, 'SimpanPerubahan'])->name('SimpanPerubahan');

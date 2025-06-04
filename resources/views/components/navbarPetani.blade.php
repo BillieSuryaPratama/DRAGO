@@ -9,6 +9,6 @@
         <li><a href="" class="{{ request()->routeIs('halDeteksi') ? 'text-[#0cbd66]' : 'hover:text-[#0cbd66]' }}">Deteksi</a></li>
         <li><a href="" class="{{ request()->routeIs('halJadwal') ? 'text-[#0cbd66]' : 'hover:text-[#0cbd66]' }}">Jadwal</a></li>
         <li><a href="" class="{{ request()->routeIs('halLaporanPetani') ? 'text-[#0cbd66]' : 'hover:text-[#0cbd66]' }}">Laporan</a></li>
-        <li><a href="{{ route('showHalAkunPetani') }}" class="{{ request()->routeIs('showHalAkunPetani') ? 'text-[#0cbd66]' : 'hover:text-[#0cbd66]' }}">Akun</a></li>
+        <li><a href="{{ route('showHalAkunPetani') }}" class="{{ request()->routeIs(['showHalAkunPetani', 'showHalFormUbahData']) ? 'text-[#0cbd66]' : 'hover:text-[#0cbd66]' }}">Akun</a></li>
     </ul>
 </nav>
