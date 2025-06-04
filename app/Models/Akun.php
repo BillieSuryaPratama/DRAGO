@@ -64,4 +64,9 @@ class Akun extends Model
             'updated_at' => now(),
         ]);
     }
+
+    public function deleteDataAkun($id)
+    {
+        DB::table('akun')->where('ID_Akun', $id)->delete();
+    }
 }

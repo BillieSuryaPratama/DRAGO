@@ -21,6 +21,12 @@ class AkunController extends Controller
         return view('halPetani', compact("Petani"));
     }
 
+    public function showHalDetailPetani($id)
+    {
+        $petani = (new Akun())->getDataAkun($id);
+        return view('halDetailPetani', compact('petani'));
+    }
+
     public function showHalAkun()
     {
         $id_akun = session('id_akun');
@@ -50,6 +56,16 @@ class AkunController extends Controller
             return redirect()->route('showHalPetani')->with('success', 'Akun berhasil ditambahkan.');
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Format data harus sesuai'])->withInput();
+        }
+    }
+
+    public function HapusAkun($id)
+    {
+        try {
+            (new Akun())->deleteDataAkun($id);
+            return redirect()->route('showHalPetani')->with('success', 'Akun berhasil dihapus.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Gagal menghapus akun.']);
         }
     }
 }

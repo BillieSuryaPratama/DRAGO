@@ -11,7 +11,7 @@
                     <p class="text-gray-600 text-lg">{{ $akun->Email }}</p>
                 </div>
             </div>
-            <a href="" class="">Edit</a>
+            <a href="" class="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600">Edit</a>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
@@ -38,13 +38,50 @@
         </div>
 
         <div class="flex justify-center mt-8">
-            <form id="logoutForm" action="" method="" class="inline">
+            <form id="logoutForm" action="{{ route('Logout') }}" method="POST" class="inline">
                 @csrf
-                <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-medium px-5 py-2 rounded">
+                <button type="button" id="logoutButton" class="bg-red-600 hover:bg-red-700 text-white font-medium px-5 py-2 rounded">
                     Logout
                 </button>
             </form>
         </div>
     </div>
+
+    <div id="logoutModal" class="fixed inset-0 z-50 hidden items-center justify-center">
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <div class="relative bg-white rounded-lg shadow-lg p-6 max-w-sm w-full z-50">
+            <h2 class="text-lg font-bold mb-4">Konfirmasi Logout</h2>
+            <p>Apakah Anda yakin ingin keluar?</p>
+            <div class="flex justify-end mt-4">
+                <button id="cancelLogout" class="bg-gray-300 text-gray-700 px-4 py-2 rounded mr-2">Batal</button>
+                <button id="confirmLogout" class="bg-red-600 text-white px-4 py-2 rounded">Logout</button>
+            </div>
+        </div>
+    </div>
+
 </main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const logoutBtn = document.getElementById('logoutButton');
+        const modal = document.getElementById('logoutModal');
+        const cancelBtn = document.getElementById('cancelLogout');
+        const confirmBtn = document.getElementById('confirmLogout');
+        const logoutForm = document.getElementById('logoutForm');
+
+        logoutBtn.addEventListener('click', () => {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        });
+
+        cancelBtn.addEventListener('click', () => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        });
+
+        confirmBtn.addEventListener('click', () => {
+            logoutForm.submit();
+        });
+    });
+</script>
 @endsection

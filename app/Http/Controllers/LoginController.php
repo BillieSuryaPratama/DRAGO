@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Akun;
 use App\Models\DeteksiPenyakit;
@@ -65,7 +66,20 @@ class LoginController extends Controller
         }
     }
 
-        public function ubahPassword(Request $request) {
+    public function Logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('showHalLogin')
+            ->header('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', 'Sat, 26 Jul 1997 05:00:00 GMT');
+    }
+
+    public function ubahPassword(Request $request)
+    {
         $request->validate([
             'username' => 'required|string',
             'password' => 'required|string|max:12',
