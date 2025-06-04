@@ -66,9 +66,13 @@ class Akun extends Model
     }
 
     public function deleteDataAkun($id)
-    {
-        DB::table('akun')->where('ID_Akun', $id)->delete();
-    }
+{
+    DB::table('akun')->where('ID_Akun', $id)->update([
+        'Status_Akun' => 0,
+        'updated_at' => now(),
+    ]);
+}
+
 
     public function updateDataAkun(Request $request, $id)
     {

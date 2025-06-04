@@ -96,12 +96,13 @@ class AkunController extends Controller
     }
 
     public function HapusAkun($id)
-    {
-        try {
-            (new Akun())->deleteDataAkun($id);
-            return redirect()->route('showHalPetani')->with('success', 'Akun berhasil dihapus.');
-        } catch (\Exception $e) {
-            return back()->withErrors(['error' => 'Gagal menghapus akun.']);
-        }
+{
+    try {
+        $akun = new Akun();
+        $akun->deleteDataAkun($id);
+        return redirect()->route('showHalPetani')->with('success', 'Akun berhasil dihapus.');
+    } catch (\Exception $e) {
+        return back()->withErrors(['error' => 'Gagal menghapus akun.']);
     }
+}
 }
