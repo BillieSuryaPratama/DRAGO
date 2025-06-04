@@ -21,13 +21,15 @@ class LoginController extends Controller
     public function DashboardPemilik(){
         $nama = session('nama');
         $id_akun = session('id_akun');
-        return view('DashboardPemilik', compact('nama', 'id_akun'));
+        $id_jabatan = session('id_jabatan');
+        return view('DashboardPemilik', compact('nama', 'id_akun', 'id_jabatan'));
     }
 
     public function DashboardPetani(){
         $nama = session('nama');
         $id_akun = session('id_akun');
-        return view('DashboardPetani', compact('nama', 'id_akun'));
+        $id_jabatan = session('id_jabatan');
+        return view('DashboardPetani', compact('nama', 'id_akun', 'id_jabatan'));
     }
 
     public function cekDataAkun($username, $password) {
@@ -39,7 +41,8 @@ class LoginController extends Controller
         return null;
     }
 
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
         $request->validate([
             'username' => 'required|string',
             'password' => 'required|string',
@@ -49,12 +52,13 @@ class LoginController extends Controller
             session([
                 'id_akun' => $akun->ID_Akun,
                 'nama' => $akun->Nama,
+                'id_jabatan' => $akun->ID_Jabatan,
             ]);
 
             if ($akun->ID_Jabatan == 2) {
-                return $this->DashboardPetani();
+                return redirect()->route('DashboardPetani');;
             } elseif ($akun->ID_Jabatan == 1) {
-                return $this->DashboardPemilik();
+                return redirect()->route('DashboardPemilik');;
             }
         } else {
             return back()->withErrors(['username' => 'Format data harus sesuai']);
@@ -67,6 +71,7 @@ class LoginController extends Controller
             'password' => 'required|string|max:12',
             'konfirmasi_password' => 'required|string|same:password',
         ]);
+
         $akun = Akun::where('Username', $request->username)->first();
         if ($akun) {
             $akun->Sandi = $request->password;

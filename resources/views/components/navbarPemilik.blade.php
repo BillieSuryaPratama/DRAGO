@@ -5,10 +5,10 @@
     </div>
 
     <ul class="flex gap-6 text-lg font-semibold">
-        <li><a href="" class="{{ request()->routeIs('DashboardPemilik') ? 'text-[#0cbd66]' : 'hover:text-[#0cbd66]' }}">Home</a></li>
+        <li><a href="{{ route('DashboardPemilik') }}" class="{{ request()->routeIs('DashboardPemilik') ? 'text-[#0cbd66]' : 'hover:text-[#0cbd66]' }}">Home</a></li>
         <li><a href="" class="{{ request()->routeIs('halPenjadwalan') ? 'text-[#0cbd66]' : 'hover:text-[#0cbd66]' }}">Penjadwalan</a></li>
         <li><a href="" class="{{ request()->routeIs('halLaporanPemilik') ? 'text-[#0cbd66]' : 'hover:text-[#0cbd66]' }}">Laporan</a></li>
-        <li><a href="" class="{{ request()->routeIs('halPetani') ? 'text-[#0cbd66]' : 'hover:text-[#0cbd66]' }}">Petani</a></li>
+        <li><a href="{{ route('showHalPetani') }}" class="{{ request()->routeIs(['showHalPetani', 'showHalTambahAkunPetani']) ? 'text-[#0cbd66]' : 'hover:text-[#0cbd66]' }}">Petani</a></li>
         <li><a href="" class="{{ request()->routeIs('halAkun') ? 'text-[#0cbd66]' : 'hover:text-[#0cbd66]' }}">Akun</a></li>
     </ul>
 </nav>

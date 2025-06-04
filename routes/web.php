@@ -14,6 +14,11 @@ Route::get('/', function () {
 Route::get('/Login', [LoginController::class, 'showHalLogin'])->name('showHalLogin');
 Route::get('/LupaPassword', [LoginController::class, 'showHalLupaPassword'])->name('showHalLupaPassword');
 Route::post('/ubah-password', [LoginController::class, 'ubahPassword'])->name('ubahPassword');
-Route::post('/Dashboard', [LoginController::class, 'Login'])->name('Login');
-Route::get('/Dashboard', [LoginController::class, 'DashboardPemilik'])->name('DashboardPemilik');
-Route::get('/Dashboard', [LoginController::class, 'DashboardPetanis'])->name('DashboardPetani');
+Route::post('/proses-login', [LoginController::class, 'Login'])->name('Login');
+Route::get('/DashboardPemilik', [LoginController::class, 'DashboardPemilik'])->name('DashboardPemilik');
+Route::get('/DashboardPetani', [LoginController::class, 'DashboardPetani'])->name('DashboardPetani');
+
+Route::get('/halPetani', [AkunController::class, 'showHalPetani'])->name('showHalPetani');
+Route::get('/halTambahPetani', [AkunController::class, 'showHalTambahAkunPetani'])->name('showHalTambahAkunPetani');
+Route::post('/tambah-petani', [AkunController::class, 'Simpan'])->name('Simpan');
+

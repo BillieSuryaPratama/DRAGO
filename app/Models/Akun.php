@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -43,5 +44,21 @@ class Akun extends Model
     {
         $DataAkun = DB::table('akun')->get();
         return $DataAkun;
+    }
+
+    public function insertDataAkun(Request $request)
+    {
+        DB::table('akun')->insert([
+            'Nama' => $request->Nama,
+            'Alamat' => $request->Alamat,
+            'Nomor_HP' => $request->Nomor_HP,
+            'Username' => $request->Username,
+            'Email' => $request->Email,
+            'Sandi' => $request->Sandi,
+            'Status_Akun' => 1,
+            'ID_Jabatan' => 2,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }
