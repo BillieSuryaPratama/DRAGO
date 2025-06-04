@@ -21,4 +21,6 @@ Route::get('/DashboardPetani', [LoginController::class, 'DashboardPetani'])->nam
 Route::get('/halPetani', [AkunController::class, 'showHalPetani'])->name('showHalPetani');
 Route::get('/halTambahPetani', [AkunController::class, 'showHalTambahAkunPetani'])->name('showHalTambahAkunPetani');
 Route::post('/tambah-petani', [AkunController::class, 'Simpan'])->name('Simpan');
+Route::get('/halAkunPemilik', [AkunController::class, 'showHalAkun'])->name('showHalAkunPemilik');
+Route::get('/halAkunPetani', [AkunController::class, 'showHalAkun'])->name('showHalAkunPetani');
 

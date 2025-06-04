@@ -21,6 +21,14 @@ class AkunController extends Controller
         return view('halPetani', compact("Petani"));
     }
 
+    public function showHalAkun()
+    {
+        $id_akun = session('id_akun');
+        $id_jabatan = session('id_jabatan');
+        $akun = (new Akun())->getDataAkun($id_akun);
+        return view('halAkun', compact('akun', 'id_akun', 'id_jabatan'));
+    }
+
     public function Simpan(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -29,7 +37,7 @@ class AkunController extends Controller
             'Nomor_HP' => 'required|digits_between:10,15',
             'Username' => 'required|string|max:20',
             'Email' => 'required|string|max:255|email',
-            'Sandi' => 'required|string|max:12',
+            'Sandi' => 'required|string|max:15',
         ]);
 
         if ($validator->fails()) {

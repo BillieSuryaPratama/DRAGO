@@ -40,10 +40,13 @@ class Akun extends Model
         return $this->hasMany(Penjadwalan::class, 'ID_Akun');
     }
 
-    public function getDataAkun()
+    public function getDataAkun($id = null)
     {
-        $DataAkun = DB::table('akun')->get();
-        return $DataAkun;
+        if ($id) {
+            return DB::table('akun')->where('ID_Akun', $id)->first();
+        } else {
+            return DB::table('akun')->get();
+        }
     }
 
     public function insertDataAkun(Request $request)
