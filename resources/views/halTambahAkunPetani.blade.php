@@ -25,29 +25,29 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label class="block font-semibold text-gray-700">Nama Lengkap</label>
-                    <input type="text" name="Nama" value="{{ old('Nama') }}" class="w-full border border-pink-600 rounded px-3 py-2 mt-1" required>
+                    <input type="text" name="Nama" value="{{ old('Nama') }}" class="w-full border border-pink-600 rounded px-3 py-2 mt-1">
 
                     <label class="block font-semibold text-gray-700 mt-4">Alamat</label>
-                    <input type="text" name="Alamat" value="{{ old('Alamat') }}" class="w-full border border-pink-600 rounded px-3 py-2 mt-1" required>
+                    <input type="text" name="Alamat" value="{{ old('Alamat') }}" class="w-full border border-pink-600 rounded px-3 py-2 mt-1">
 
                     <label class="block font-semibold text-gray-700 mt-4">No.Hp</label>
-                    <input type="text" name="Nomor_HP" value="{{ old('Nomor_HP') }}" class="w-full border border-pink-600 rounded px-3 py-2 mt-1" required>
+                    <input type="text" name="Nomor_HP" value="{{ old('Nomor_HP') }}" class="w-full border border-pink-600 rounded px-3 py-2 mt-1">
                 </div>
 
                 <div>
                     <label class="block font-semibold text-gray-700">Username</label>
-                    <input type="text" name="Username" value="{{ old('Username') }}" class="w-full border border-pink-600 rounded px-3 py-2 mt-1" required>
+                    <input type="text" name="Username" value="{{ old('Username') }}" class="w-full border border-pink-600 rounded px-3 py-2 mt-1">
 
                     <label class="block font-semibold text-gray-700 mt-4">Email</label>
-                    <input type="email" name="Email" value="{{ old('Email') }}" class="w-full border border-pink-600 rounded px-3 py-2 mt-1" required>
+                    <input type="email" name="Email" value="{{ old('Email') }}" class="w-full border border-pink-600 rounded px-3 py-2 mt-1">
 
                     <label class="block font-semibold text-gray-700 mt-4">Sandi</label>
-                    <input type="text" name="Sandi" value="{{ old('Sandi') }}" class="w-full border border-pink-600 rounded px-3 py-2 mt-1" required>
+                    <input type="text" name="Sandi" value="{{ old('Sandi') }}" class="w-full border border-pink-600 rounded px-3 py-2 mt-1">
                 </div>
             </div>
 
             <div class="flex justify-end mt-8">
-                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-medium px-5 py-2 rounded">Simpan Perubahan</button>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-medium px-5 py-2 rounded">Simpan</button>
             </div>
         </div>
     </form>

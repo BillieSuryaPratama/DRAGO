@@ -43,6 +43,10 @@ class AkunController extends Controller
 
     public function Simpan(Request $request)
     {
+        if (empty($request->Nama) || empty($request->Alamat) || empty($request->Nomor_HP) || empty($request->Username) || empty($request->Email) || empty($request->Sandi)) {
+            return back()->withErrors(['error' => 'Data harus diisi'])->withInput();
+        }
+
         $validator = Validator::make($request->all(), [
             'Nama' => ['required', 'string', 'max:50', 'regex:/^[A-Za-z\s]+$/'],
             'Alamat' => 'required|string|max:50',

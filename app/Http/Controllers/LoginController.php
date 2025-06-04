@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Akun;
@@ -44,6 +45,10 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+        if (empty($request->username) || empty($request->password)) {
+            return back()->withErrors(['error' => 'Data harus diisi'])->withInput();
+        }
+
         $request->validate([
             'username' => 'required|string',
             'password' => 'required|string',
@@ -80,11 +85,19 @@ class LoginController extends Controller
 
     public function ubahPassword(Request $request)
     {
-        $request->validate([
+        if (empty($request->username) || empty($request->password) || empty($request->konfirmasi_password)) {
+            return back()->withErrors(['error' => 'Data harus diisi'])->withInput();
+        }
+
+        $validator = Validator::make($request->all(), [
             'username' => 'required|string',
             'password' => 'required|string|max:12',
             'konfirmasi_password' => 'required|string|same:password',
         ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors(['error' => 'Format data harus sesuai'])->withInput();
+        }
 
         $akun = Akun::where('Username', $request->username)->first();
         if ($akun) {

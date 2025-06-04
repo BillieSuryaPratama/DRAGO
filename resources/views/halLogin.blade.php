@@ -23,15 +23,6 @@
             }
         }
 
-        function validateForm(event) {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            if (!username || !password) {
-                event.preventDefault(); // Mencegah form dari pengiriman
-                alert('Username dan password wajib diisi');
-            }
-        }
     </script>
 </head>
 <body class="font-urbanist">
@@ -55,15 +46,15 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('Login') }}" class="w-full max-w-sm space-y-4" onsubmit="validateForm(event)">
+                <form method="POST" action="{{ route('Login') }}" class="w-full max-w-sm space-y-4">
                     @csrf
                     <div>
                         <label for="username" class="block text-sm text-gray-600 mb-1">Username</label>
-                        <input type="text" id="username" name="username" class="w-full border border-green-500 rounded px-3 py-2" required>
+                        <input type="text" id="username" name="username" class="w-full border border-green-500 rounded px-3 py-2">
                     </div>
                     <div>
                         <label for="password" class="block text-sm text-gray-600 mb-1">Password</label>
-                        <input type="password" id="password" name="password" class="w-full border border-green-500 rounded px-3 py-2" required>
+                        <input type="password" id="password" name="password" class="w-full border border-green-500 rounded px-3 py-2">
                     </div>
                     <button type="submit" class="w-full bg-drago text-white py-2 rounded hover:bg-pink-900 transition">Login</button>
                 </form>
