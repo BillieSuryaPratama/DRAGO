@@ -52,7 +52,7 @@ class AkunController extends Controller
             'Alamat' => 'required|string|max:50',
             'Nomor_HP' => 'required|digits_between:10,15',
             'Username' => 'required|string|max:20',
-            'Email' => 'required|string|max:255|email',
+            'Email' => 'required|string|max:255',
             'Sandi' => 'required|string|max:15',
         ]);
 
@@ -71,13 +71,17 @@ class AkunController extends Controller
 
     public function SimpanPerubahan(Request $request)
     {
+        if (empty($request->Nama) || empty($request->Alamat) || empty($request->Nomor_HP) || empty($request->Username) || empty($request->Email) || empty($request->Sandi)) {
+            return back()->withErrors(['error' => 'Data harus diisi'])->withInput();
+        }
+
         $id_akun = session('id_akun');
         $validator = Validator::make($request->all(), [
             'Nama' => ['required', 'string', 'max:50', 'regex:/^[A-Za-z\s]+$/'],
             'Alamat' => 'required|string|max:50',
             'Nomor_HP' => 'required|digits_between:10,15',
             'Username' => 'required|string|max:20',
-            'Email' => 'required|string|max:255|email',
+            'Email' => 'required|string|max:255',
             'Sandi' => 'required|string|max:15',
         ]);
 
