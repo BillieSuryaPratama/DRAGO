@@ -28,3 +28,5 @@ Route::get('/halAkunPemilik', [AkunController::class, 'showHalAkun'])->name('sho
 Route::get('/halAkunPetani', [AkunController::class, 'showHalAkun'])->name('showHalAkunPetani');
 Route::get('/halFormUbahData/{id}', [AkunController::class, 'showHalFormUbahData'])->name('showHalFormUbahData');
 Route::post('/update-akun', [AkunController::class, 'SimpanPerubahan'])->name('SimpanPerubahan');
+
+Route::get('/halDeteksi', [DeteksiPenyakitController::class, 'showHalDeteksi'])->name('showHalDeteksi');
