@@ -1,7 +1,14 @@
 @extends(session('id_jabatan') == 1 ? 'layouts.appPemilik' : 'layouts.appPetani')
 
 @section("content")
+@if (session('success'))
+    <div class="bg-green-500 text-white p-4 rounded mb-4 text-center">
+        {{ session('success') }}
+    </div>
+@endif
+
 <main class="p-6">
+
     <div class="bg-white shadow-md rounded-lg p-8 max-w-5xl mx-auto">
         <div class="flex justify-between items-start">
             <div class="flex items-center gap-4">
@@ -51,7 +58,7 @@
         <div class="absolute inset-0 bg-black opacity-50"></div>
         <div class="relative bg-white rounded-lg shadow-lg p-6 max-w-sm w-full z-50">
             <h2 class="text-lg font-bold mb-4">Konfirmasi LogOut</h2>
-            <p>Apakah Anda yakin ingin keluar?</p>
+            <p>Apakah Anda yakin ingin keluar dari sistem?</p>
             <div class="flex justify-end mt-4">
                 <button id="cancelLogout" class="bg-gray-300 text-gray-700 px-4 py-2 rounded mr-2">Tidak</button>
                 <button id="confirmLogout" class="bg-red-600 text-white px-4 py-2 rounded">LogOut</button>

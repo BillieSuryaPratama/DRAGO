@@ -63,7 +63,8 @@ class AkunController extends Controller
         try {
             $akun = new Akun();
             $akun->insertDataAkun($request);
-            return redirect()->route('showHalPetani')->with('success', 'Akun berhasil ditambahkan.');
+
+            return redirect()->route('showHalPetani')->with('success', 'Data berhasil ditambah.');
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Format data harus sesuai'])->withInput();
         }
@@ -93,10 +94,11 @@ class AkunController extends Controller
             $akun = new Akun();
             $akun->updateDataAkun($request, $id_akun);
             $id_jabatan = session('id_jabatan');
+
             if ($id_jabatan == 1) {
-                return redirect()->route('showHalAkunPemilik')->with('success', 'Akun berhasil diupdate.');
+                return redirect()->route('showHalAkunPemilik')->with('success', 'Akun berhasil diubah.');
             } else {
-                return redirect()->route('showHalAkunPetani')->with('success', 'Akun berhasil diupdate.');
+                return redirect()->route('showHalAkunPetani')->with('success', 'Akun berhasil diubah.');
             }
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Format data harus sesuai'])->withInput();
@@ -108,7 +110,7 @@ class AkunController extends Controller
     try {
         $akun = new Akun();
         $akun->deleteDataAkun($id);
-        return redirect()->route('showHalPetani')->with('success', 'Akun berhasil dihapus.');
+        return redirect()->route('showHalPetani');
     } catch (\Exception $e) {
         return back()->withErrors(['error' => 'Gagal menghapus akun.']);
     }

@@ -1,6 +1,12 @@
 @extends("layouts.appPemilik")
 
 @section("content")
+@if (session('success'))
+    <div class="bg-green-500 text-white p-4 rounded mb-4 text-center">
+        {{ session('success') }}
+    </div>
+@endif
+
 <div class="container flex justify-center">
     <div class="w-full max-w-4xl">
         @foreach($Petani as $petani)
