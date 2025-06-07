@@ -30,3 +30,9 @@ Route::get('/halFormUbahData/{id}', [AkunController::class, 'showHalFormUbahData
 Route::post('/update-akun', [AkunController::class, 'SimpanPerubahan'])->name('SimpanPerubahan');
 
 Route::get('/halDeteksi', [DeteksiPenyakitController::class, 'showHalDeteksi'])->name('showHalDeteksi');
+Route::get('/halLaporanPetani', [LaporanController::class, 'showHalLaporanPetani'])->name('showHalLaporanPetani');
+Route::get('/halTambahLaporan', [LaporanController::class, 'showHalTambahLaporan'])->name('showHalTambahLaporan');
+Route::post('/tambah-laporan', [LaporanController::class, 'Simpan'])->name('Simpan_laporan');
+Route::get('/halDetaillaporan/{id}', [LaporanController::class, 'showHalDetailLaporan'])->name('showHalDetailLaporan');
+Route::post('/update-laporan', [LaporanController::class, 'SimpanPerubahan'])->name('SimpanPerubahanLaporan');
+Route::delete('/hapus-laporan/{id}', [LaporanController::class, 'HapusLaporan'])->name('HapusLaporan');
