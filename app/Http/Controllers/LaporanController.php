@@ -11,7 +11,9 @@ use Illuminate\Support\Facades\DB;
 class LaporanController extends Controller
 {
     public function showHalLaporanPemilik(){
-        //
+        $laporan = (new Laporan())->getDatalaporan();
+        $laporan = Laporan::with('Akun')->get();
+        return view('halLaporanPemilik', compact("laporan"));
     }
     public function showHalLaporanPetani(){
         $ID_Akun = session('id_akun');

@@ -36,3 +36,4 @@ Route::post('/tambah-laporan', [LaporanController::class, 'Simpan'])->name('Simp
 Route::get('/halDetaillaporan/{id}', [LaporanController::class, 'showHalDetailLaporan'])->name('showHalDetailLaporan');
 Route::post('/update-laporan', [LaporanController::class, 'SimpanPerubahan'])->name('SimpanPerubahanLaporan');
 Route::delete('/hapus-laporan/{id}', [LaporanController::class, 'HapusLaporan'])->name('HapusLaporan');
+Route::get('/halLaporanPemilik', [LaporanController::class, 'showHalLaporanPemilik'])->name('showHalLaporanPemilik');
