@@ -46,8 +46,13 @@
                 </div>
             </div>
 
-            <div class="flex justify-end mt-8">
-                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-medium px-5 py-2 rounded">Simpan Perubahan</button>
+            <div class="flex justify-between mt-8">
+                <div>
+                    <a href="{{ route('showHalDetailKegiatan', $kegiatan->ID_Akun) }}" class="bg-red-500 hover:bg-red-600 text-white font-medium px-5 py-2 rounded">Batal</a>
+                </div>
+                <div>
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-medium px-5 py-2 rounded">Simpan Perubahan</button>
+                </div>
             </div>
         </div>
     </form>
