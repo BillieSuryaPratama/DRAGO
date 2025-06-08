@@ -68,7 +68,16 @@
         const tanggalInput = document.querySelector('input[name="Tanggal"]');
         const date = new Date(tanggalInput.value);
         if (!isNaN(date)) {
-            const formatted = date.toLocaleDateString('id-ID');
+            const hari = date.getDate();
+            const bulan = date.getMonth(); // 0 = Januari, 11 = Desember
+            const tahun = date.getFullYear();
+
+            const namaBulan = [
+                'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+            ];
+
+            const formatted = `${hari} ${namaBulan[bulan]} ${tahun}`;
             document.getElementById('previewTanggal').textContent = formatted;
         } else {
             document.getElementById('previewTanggal').textContent = '-';
