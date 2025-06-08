@@ -44,6 +44,17 @@ class Penjadwalan extends Model
         }
     }
 
+    public function getDataKegiatanByAkun($id)
+    {
+        return DB::table('penjadwalan')
+            ->join('akun', 'penjadwalan.ID_Akun', '=', 'akun.ID_Akun')
+            ->select('penjadwalan.*', 'akun.Nama')
+            ->where('penjadwalan.ID_Akun', $id)
+            ->whereDate('penjadwalan.Tanggal', '>=', now())
+            ->orderBy('JamMulai', 'asc')
+            ->get();
+    }
+
     public function insertDataKegiatan(Request $request)
     {
         DB::table('penjadwalan')->insert([
@@ -56,5 +67,10 @@ class Penjadwalan extends Model
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+    }
+
+    public function deleteDataKegiatan($id)
+    {
+        DB::table('penjadwalan')->where('ID_Penjadwalan', $id)->delete();
     }
 }

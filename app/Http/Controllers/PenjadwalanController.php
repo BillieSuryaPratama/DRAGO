@@ -30,6 +30,12 @@ class PenjadwalanController extends Controller
         return view('halPenjadwalan', compact("Petani"));
     }
 
+    public function showHalDetailKegiatan($id)
+    {
+        $kegiatan = (new Penjadwalan())->getDataKegiatanByAkun($id);
+        return view('halDetailKegiatan', compact('kegiatan'));
+    }
+
     public function Simpan(Request $request)
     {
         if (empty($request->ID_Akun) || empty($request->JamMulai) || empty($request->JamBerakhir) || empty($request->Tanggal) || empty($request->Kegiatan)) {
@@ -40,7 +46,7 @@ class PenjadwalanController extends Controller
             'ID_Akun' => 'required|exists:akun,ID_Akun',
             'JamMulai' => 'required|date',
             'JamBerakhir' => 'required|date|after:JamMulai',
-            'Tanggal' => 'required|date',
+            'Tanggal' => 'required|date|after_or_equal:today',
             'Kegiatan' => 'required|string|max:255',
         ]);
 
@@ -54,6 +60,17 @@ class PenjadwalanController extends Controller
             return redirect()->route('showHalPenjadwalan')->with('success', 'Jadwal berhasil ditambahkan.');
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Terjadi kesalahan saat menyimpan data.'])->withInput();
+        }
+    }
+
+    public function HapusKegiatan($id)
+    {
+        try {
+            $kegiatan = new Penjadwalan();
+            $kegiatan->deleteDataKegiatan($id);
+            return redirect()->route('showHalDetailKegiatan');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Gagal menghapus akun.']);
         }
     }
 }

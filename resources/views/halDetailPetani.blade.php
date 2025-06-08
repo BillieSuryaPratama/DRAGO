@@ -65,13 +65,13 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const logoutBtn = document.getElementById('deleteButton');
+        const deleteBtn = document.getElementById('deleteButton');
         const modal = document.getElementById('deleteModal');
         const cancelBtn = document.getElementById('cancelDelete');
         const confirmBtn = document.getElementById('confirmDelete');
         const deleteForm = document.getElementById('deleteForm');
 
-        logoutBtn.addEventListener('click', () => {
+        deleteBtn.addEventListener('click', () => {
             modal.classList.remove('hidden');
             modal.classList.add('flex');
         });

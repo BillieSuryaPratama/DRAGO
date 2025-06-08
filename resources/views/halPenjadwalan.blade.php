@@ -16,7 +16,7 @@
                 <strong>{{ $petani->Nama }}</strong>
             </div>
 
-            <a href="{{ route('showHalDetailPetani', $petani->ID_Akun) }}">
+            <a href="{{ route('showHalDetailKegiatan', $petani->ID_Akun) }}">
                 <button style="background-color: #4a90e2; color: white; border: none; padding: 5px 15px; border-radius: 5px;">
                     LIHAT
                 </button>

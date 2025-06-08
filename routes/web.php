@@ -47,3 +47,5 @@ Route::get('/filterLaporan',[LaporanController::class, 'filterLaporan'])->name('
 Route::get('/halPenjadwalan', [PenjadwalanController::class, 'showHalPenjadwalan'])->name('showHalPenjadwalan');
 Route::get('/halTambahJadwalKegiatan', [PenjadwalanController::class, 'showHalTambahJadwalKegiatan'])->name('showHalTambahJadwalKegiatan');
 Route::post('/tambah-jadwal', [PenjadwalanController::class, 'Simpan'])->name('SimpanJadwal');
+Route::get('/halDetailKegiatan/{id}', [PenjadwalanController::class, 'showHalDetailKegiatan'])->name('showHalDetailKegiatan');
+Route::delete('/hapus-jadwal/{id}', [PenjadwalanController::class, 'hapusKegiatan'])->name('hapusKegiatan');
