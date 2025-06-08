@@ -7,7 +7,7 @@
     <button type="button" id="bulanTahunBtn" class="bg-blue-500 text-white px-4 py-2 rounded shadow">Filter Bulan & Tahun</button>
     </form>
 </div>
-<div class="mt-10">
+<div class="w-full md:w-1/2 mx-auto">
     <h2 class="text-xl font-bold text-center mb-4 text-gray-500">Grafik Jumlah Total Tanaman Sehat & Jumlah Total Tanaman Sakit</h2>
     <canvas id="totalLaporanChart" height="100"></canvas>
 </div>
