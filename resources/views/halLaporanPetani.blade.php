@@ -1,13 +1,19 @@
 @extends('layouts.appPetani')
 @section('content')
 @if (session('success'))
-    <div  id="successMessage" class="bg-green-300 text-white w-1/4 px-2 rounded mx-auto text-center">
+    <div id="successMessage" class="bg-green-500 text-white w-1/4 p-2 rounded-xl mx-auto text-center opacity-100 transition-opacity duration-700">
         {{ session('success') }}
     </div>
     <script>
-        setTimeout(function() {
-            document.getElementById('successMessage').style.display = 'none';
-        }, 3000);
+        const msg = document.getElementById('successMessage');
+        if (msg && msg.textContent.trim() !== '') {
+            setTimeout(() => {
+                msg.classList.remove('opacity-100');
+                msg.classList.add('opacity-0');
+                setTimeout(() => {
+                    msg.style.display = 'none';
+                }, 300);
+            }, 2000);}
     </script>
 @endif
 <div class="max-w-6xl mx-auto px-4 mt-10">

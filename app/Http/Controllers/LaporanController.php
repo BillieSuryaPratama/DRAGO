@@ -68,9 +68,7 @@ class LaporanController extends Controller
         return redirect()->route('showHalLaporanPetani')->with('success', 'Data berhasil ditambah.');
     } catch (\Exception $e) {
         return back()->withErrors(['error' => 'Terjadi kesalahan saat menyimpan data.'])->withInput();
-    }
-    }
-
+    }}
     public function showHalDetailLaporan($id){
         $laporan = (new Laporan())->getDatalaporan($id);
         return view('halDetailLaporan', compact('laporan'));
