@@ -1,4 +1,4 @@
-@extends("layouts.appPemilik")
+@extends("layouts.appPetani")
 
 @section("content")
 @if (session('success'))
