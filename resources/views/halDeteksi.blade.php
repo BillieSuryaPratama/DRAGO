@@ -1,13 +1,15 @@
 @extends("layouts.appPetani")
 
 @section("content")
+<div id="message" class="bg-green-500 text-white p-4 rounded mb-4 text-center hidden">Gambar berhasil ditambahkan</div>
+
 <div class="bg-white shadow-md rounded-lg p-8 max-w-4xl mx-auto">
     <main class="flex flex-col items-center justify-center p-5">
         <h2 class="text-4xl font-extrabold mb-4 text-black">Unggah Foto!</h2>
         <h1 class="font-extrabold mb-4 text-black text-center">Untuk Mengetahui Penyakit Batang Pada Buah Naga kamu.</h1>
 
         <div class="w-fit max-w-md text-center">
-            <form action="" method="" enctype="multipart/form-data" id="uploadForm">
+            <form action="{{ route('Deteksi')}}" method="POST" enctype="multipart/form-data" id="uploadForm">
                 @csrf
                 <label for="imageInput" id="uploadLabel" class="cursor-pointer border-2 border-dashed border-gray-300 rounded-lg px-6 py-12 bg-gray-50 hover:bg-gray-100 flex flex-col items-center justify-center">
                     <img id="previewImage" src="" alt="Preview" class="hidden max-h-64 mb-4 rounded">
@@ -38,6 +40,7 @@
     const uploadText = document.getElementById('uploadText');
     const ButtonBatal = document.getElementById('ButtonBatal');
     const ButtonRiwayat = document.getElementById('ButtonRiwayat');
+    const message = document.getElementById('message');
 
     imageInput.addEventListener('change', function() {
         const file = this.files[0];
@@ -52,6 +55,7 @@
 
                 ButtonBatal.classList.remove('hidden');
                 ButtonRiwayat.classList.add('hidden');
+                message.classList.remove('hidden');
             }
 
             reader.readAsDataURL(file);
@@ -65,7 +69,8 @@
         uploadText.textContent = "Unggah Foto";
 
         ButtonBatal.classList.add('hidden');
-        ButtonRiwayat.classList.remove('hidden');
+        ButtonRiwayat.classList.remove('hidden')
+        message.classList.add('hidden');
     });
 </script>
 @endsection

@@ -12,5 +12,3 @@
         <li><a href="{{ route('showHalAkunPemilik') }}" class="{{ request()->routeIs(['showHalAkunPemilik', 'showHalFormUbahData']) ? 'text-[#0cbd66]' : 'hover:text-[#0cbd66]' }}">Akun</a></li>
     </ul>
 </nav>
-
-?

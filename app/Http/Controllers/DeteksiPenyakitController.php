@@ -17,13 +17,15 @@ class DeteksiPenyakitController extends Controller
         //
     }
 
-    public function showHalDetailDeteksi()
+    public function showHalDetailDeteksi($id)
     {
         //
     }
 
-    public function Deteksi(Request $request, $id)
+    public function Deteksi(Request $request)
     {
+        $id_akun = session('id_akun');
+
         $request->validate([
             'imagefile' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
@@ -42,9 +44,13 @@ class DeteksiPenyakitController extends Controller
         ]);
         $result = json_decode($response->getBody(), true);
 
-        return view('hasilDeteksi', [
-            'prediction' => $result['prediction'],
-            'confidence' => $result['confidence'],
-        ], compact('petani'));
+        $deteksi = new DeteksiPenyakit();
+        $deteksi->insertDataPenyakit((object) [
+            'ID_Akun' => $id_akun,
+            'ID_Penyakit' => $result['prediction'],
+            'Gambar_Deteksi' => file_get_contents($image->getPathname()),
+            'Akurasi' => $result['confidence'],
+            'Tanggal_Deteksi' => now(),
+        ]);
     }
 }
