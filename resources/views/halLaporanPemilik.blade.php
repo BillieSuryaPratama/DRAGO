@@ -1,14 +1,14 @@
 @extends("layouts.appPemilik")
 @section("content")
-<h1 class="text-center text-black font-extrabold text-2xl ">LAPORAN {{ $bulanTahun  ??  ''}}</h1>
-<div class="flex justify-start mb-4">
+<h1 class="text-center text-black font-extrabold text-2xl ">Laporan {{ $bulanTahun  ??  ''}}</h1>
+<div class="flex justify-end mb-4">
     <form method="GET" action="{{ route('filterLaporan') }}" class="flex gap-2 items-center">
     <input type="hidden" name="periode" id="periodeInput">
     <button type="button" id="bulanTahunBtn" class="bg-blue-500 text-white px-4 py-2 rounded shadow">Filter Bulan & Tahun</button>
     </form>
 </div>
 <div class="mt-10">
-    <h2 class="text-xl font-bold text-center mb-4">Grafik Jumlah Total Tanaman Sehat & Sakit</h2>
+    <h2 class="text-xl font-bold text-center mb-4 text-gray-500">Grafik Jumlah Total Tanaman Sehat & Jumlah Total Tanaman Sakit</h2>
     <canvas id="totalLaporanChart" height="100"></canvas>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -21,8 +21,8 @@
             datasets: [{
                 label: 'Jumlah Tanaman',
                 data: [{{ $totalSehat }}, {{ $totalSakit }}],
-                backgroundColor: ['rgba(75, 192, 192, 0.7)', 'rgba(255, 99, 132, 0.7)'],
-                borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)'],
+                backgroundColor: ['rgba(0, 192, 0, 1)', 'rgba(192, 0, 0, 1)'],
+                borderColor: ['rgba(0,192,0,1)', 'rgba(192, 0, 0, 0)'],
                 borderWidth: 1
             }]
         },
@@ -31,10 +31,13 @@
             scales: {
                 y: {
                     beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Jumlah'
+                    ticks: {
+                    precision: 0,
+                    stepSize: 0,
+                    callback: function(value) {
+                        return Number.isInteger(value) ? value : null;
                     }
+                }
                 }
             },
             plugins: {
@@ -43,20 +46,21 @@
         }
     });
 </script>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="w-1/2 mx-auto">
     @if($laporan->isEmpty())
     <div class="col-span-full text-center text-gray-500 font-medium">
         Tidak ada laporan yang sesuai dengan filter bulan dan tahun.
     </div>
     @else
     @foreach ($laporan as $item)
-    <div class="bg-gray-100 p-4 rounded-xl shadow">
+    <div class="bg-gray-200 p-4 rounded-xl shadow mt-2">
         <h2 class="text-lg font-semibold text-gray-800 mb-2">{{ $item->Akun->Nama ?? 'Nama Tidak Ditemukan' }}</h2>
+        <div class="border-b-2 border-gray-300 mb-2"></div>
         <div class="text-sm text-gray-700">
             <p><span class="font-medium">Tanaman Sehat:</span> {{ $item->Jumlah_Tumbuhan_Sehat }}</p>
             <p><span class="font-medium">Tanaman Sakit:</span> {{ $item->Jumlah_Tumbuhan_Sakit }}</p>
             <p><span class="font-medium">Keterangan:</span> {{ $item->Keterangan }}</p>
-            <p><span class="font-medium">Tanggal:</span> {{ \Carbon\Carbon::parse($item->Tanggal_Laporan)->translatedFormat('d F Y') }}</p>
+            <p><span class="font-medium">Tanggal:</span> {{ \Carbon\Carbon::parse($item->Tanggal_Laporan)->locale('id')->translatedFormat('d F Y') }}</p>
         </div>
     </div>
     @endforeach

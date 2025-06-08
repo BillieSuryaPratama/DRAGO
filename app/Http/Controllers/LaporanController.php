@@ -106,7 +106,7 @@ class LaporanController extends Controller
         $query = Laporan::with('Akun');
         if ($request->has('periode') && $request->periode != '') {
             [$year, $month] = explode('-', $request->periode);
-            $bulanTahun = Carbon::createFromFormat('Y-m', "$year-$month")->translatedFormat('F Y');
+            $bulanTahun = Carbon::createFromFormat('Y-m', "$year-$month")->locale('id')->translatedFormat('F Y');
             $query->whereYear('Tanggal_Laporan', $year)
                 ->whereMonth('Tanggal_Laporan', $month);
         }
