@@ -77,7 +77,7 @@
         cancelBtn.addEventListener('click', () => {
             modal.classList.add('hidden');
             modal.classList.remove('flex');
-            window.location.href = "{{ route('showHalPetani') }}";
+            window.location.href = "{{ route('showHalLaporanPetani') }}";
         });
 
         confirmBtn.addEventListener('click', () => {
