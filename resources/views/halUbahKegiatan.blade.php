@@ -45,6 +45,11 @@
                     <input type="text" name="Kegiatan" value="{{ old('Kegiatan', $kegiatan->Kegiatan) }}" class="w-full border border-pink-600 rounded px-3 py-2 mt-1">
                 </div>
             </div>
+            <div class="mt-6">
+                <p><strong>Preview Tanggal:</strong> <span id="previewTanggal">-</span></p>
+                <p><strong>Jam Mulai (24 jam):</strong> <span id="previewJamMulai">-</span></p>
+                <p><strong>Jam Berakhir (24 jam):</strong> <span id="previewJamBerakhir">-</span></p>
+            </div>
 
             <div class="flex justify-between mt-8">
                 <div>
@@ -57,4 +62,46 @@
         </div>
     </form>
 </main>
+
+<script>
+    function updatePreviewTanggal() {
+        const tanggalInput = document.querySelector('input[name="Tanggal"]');
+        const date = new Date(tanggalInput.value);
+        if (!isNaN(date)) {
+            const formatted = date.toLocaleDateString('id-ID');
+            document.getElementById('previewTanggal').textContent = formatted;
+        } else {
+            document.getElementById('previewTanggal').textContent = '-';
+        }
+    }
+
+    function updatePreviewJam(selectorInput, selectorPreview) {
+        const input = document.querySelector(`input[name="${selectorInput}"]`);
+        const date = new Date(input.value);
+        if (!isNaN(date)) {
+            const formattedTime = date.toLocaleTimeString('id-ID', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            });
+            document.getElementById(selectorPreview).textContent = formattedTime;
+        } else {
+            document.getElementById(selectorPreview).textContent = '-';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const tanggalInput = document.querySelector('input[name="Tanggal"]');
+        const jamMulaiInput = document.querySelector('input[name="JamMulai"]');
+        const jamBerakhirInput = document.querySelector('input[name="JamBerakhir"]');
+
+        tanggalInput.addEventListener('input', updatePreviewTanggal);
+        jamMulaiInput.addEventListener('input', () => updatePreviewJam("JamMulai", "previewJamMulai"));
+        jamBerakhirInput.addEventListener('input', () => updatePreviewJam("JamBerakhir", "previewJamBerakhir"));
+
+        updatePreviewTanggal();
+        updatePreviewJam("JamMulai", "previewJamMulai");
+        updatePreviewJam("JamBerakhir", "previewJamBerakhir");
+    });
+</script>
 @endsection
