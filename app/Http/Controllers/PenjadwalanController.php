@@ -46,6 +46,13 @@ class PenjadwalanController extends Controller
         return view('halUbahKegiatan', compact('kegiatan', 'petani'));
     }
 
+    public function showHalJadwal()
+    {
+        $id_akun = session('id_akun');
+        $kegiatan = (new Penjadwalan())->getDataKegiatanByAkun($id_akun);
+        return view('halJadwal', compact('kegiatan'));
+    }
+
     public function Simpan(Request $request)
     {
         if (empty($request->ID_Akun) || empty($request->JamMulai) || empty($request->JamBerakhir) || empty($request->Tanggal) || empty($request->Kegiatan)) {
@@ -100,7 +107,6 @@ class PenjadwalanController extends Controller
         }
     }
 
-
     public function HapusKegiatan($id)
     {
         try {
@@ -111,4 +117,33 @@ class PenjadwalanController extends Controller
             return back()->withErrors(['error' => 'Gagal menghapus akun.']);
         }
     }
+
+    public function cekValidasiWaktu(Request $request)
+    {
+        $kegiatan = Penjadwalan::find($request->id);
+        $currentTime = now();
+
+        if ($kegiatan->Status !== 'Belum Dikerjakan') {
+            return back()->withErrors(['error' => 'Kegiatan sudah dikerjakan atau terlambat.']);
+        }
+
+        if ($currentTime < $kegiatan->JamMulai) {
+            return back()->withErrors(['error' => 'Waktu belum memasuki jam kegiatan.']);
+        }
+
+        if ($currentTime >= $kegiatan->JamMulai && $currentTime <= $kegiatan->JamBerakhir) {
+            $this->SudahSelesai($kegiatan->ID_Penjadwalan, 'Sudah Dikerjakan');
+            return redirect()->route('showHalJadwal')->with('success', 'Status berhasil diubah.');
+        } else {
+            $this->SudahSelesai($kegiatan->ID_Penjadwalan, 'Terlambat');
+            return redirect()->route('showHalJadwal')->with('success', 'Status berhasil diubah.');
+        }
+    }
+
+    public function SudahSelesai($id, $status)
+    {
+        Penjadwalan::where('ID_Penjadwalan', $id)->update(['Status' => $status]);
+    }
+
+
 }

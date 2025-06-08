@@ -51,3 +51,5 @@ Route::get('/halDetailKegiatan/{id}', [PenjadwalanController::class, 'showHalDet
 Route::delete('/hapus-jadwal/{id}', [PenjadwalanController::class, 'hapusKegiatan'])->name('hapusKegiatan');
 Route::get('/halUbahKegiatan/{id}', [PenjadwalanController::class, 'showHalUbahKegiatan'])->name('showHalUbahKegiatan');
 Route::post('/update-kegiatan/{id}', [PenjadwalanController::class, 'SimpanPerubahan'])->name('SimpanPerubahanKegiatan');
+Route::get('/halJadwal', [PenjadwalanController::class, 'showHalJadwal'])->name('showHalJadwal');
+Route::post('/cek-validasi-waktu', [PenjadwalanController::class, 'cekValidasiWaktu'])->name('cekValidasiWaktu');
