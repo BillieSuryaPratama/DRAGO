@@ -15,13 +15,13 @@ class DeteksiPenyakitController extends Controller
 
     public function showHalRiwayatDeteksi()
     {
-        $DeteksiPenyakit = (new DeteksiPenyakit())->getDeteksiPenyakit();
+        $DeteksiPenyakit = (new DeteksiPenyakit())->getDataPenyakit();
         return view('halRiwayatDeteksi', compact("DeteksiPenyakit"));
     }
 
     public function showHalDetailDeteksi($id)
     {
-        $DetailPenyakit = (new DeteksiPenyakit())->getDeteksiPenyakit($id);
+        $DetailPenyakit = (new DeteksiPenyakit())->getDataPenyakit($id);
         return view('halDetailDeteksi', compact('DetailPenyakit'));
     }
 

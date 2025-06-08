@@ -43,3 +43,7 @@ Route::post('/update-laporan', [LaporanController::class, 'SimpanPerubahan'])->n
 Route::delete('/hapus-laporan/{id}', [LaporanController::class, 'HapusLaporan'])->name('HapusLaporan');
 Route::get('/halLaporanPemilik', [LaporanController::class, 'showHalLaporanPemilik'])->name('showHalLaporanPemilik');
 Route::get('/filterLaporan',[LaporanController::class, 'filterLaporan'])->name('filterLaporan');
+
+Route::get('/halPenjadwalan', [PenjadwalanController::class, 'showHalPenjadwalan'])->name('showHalPenjadwalan');
+Route::get('/halTambahJadwalKegiatan', [PenjadwalanController::class, 'showHalTambahJadwalKegiatan'])->name('showHalTambahJadwalKegiatan');
+Route::post('/tambah-jadwal', [PenjadwalanController::class, 'Simpan'])->name('SimpanJadwal');

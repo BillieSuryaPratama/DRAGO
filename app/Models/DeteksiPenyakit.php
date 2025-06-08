@@ -29,7 +29,7 @@ class DeteksiPenyakit extends Model
         return $this->belongsTo(Akun::class, 'ID_Akun');
     }
 
-    public function getDeteksiPenyakit($id = null)
+    public function getDataPenyakit($id = null)
     {
         if ($id) {
             return DB::table('deteksi_penyakit')
