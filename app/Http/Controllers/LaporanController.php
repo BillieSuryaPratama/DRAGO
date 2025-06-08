@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Laporan;
@@ -12,8 +13,10 @@ class LaporanController extends Controller
 {
     public function showHalLaporanPemilik(){
         $laporan = (new Laporan())->getDatalaporan();
+        $totalSehat = $laporan->sum('Jumlah_Tumbuhan_Sehat');
+        $totalSakit = $laporan->sum('Jumlah_Tumbuhan_Sakit');
         $laporan = Laporan::with('Akun')->get();
-        return view('halLaporanPemilik', compact("laporan"));
+        return view('halLaporanPemilik', compact("laporan","totalSehat","totalSakit"));
     }
     public function showHalLaporanPetani(){
         $ID_Akun = session('id_akun');
@@ -55,7 +58,7 @@ class LaporanController extends Controller
             } catch (\Exception $e) {
                 return back()->withErrors(['error' => 'Terjadi kesalahan saat menyimpan data.'])->withInput();
         }
-        }
+    }
     public function showHalDetailLaporan($id){
         $laporan = (new Laporan())->getDatalaporan($id);
         return view('halDetailLaporan', compact('laporan'));
@@ -91,16 +94,25 @@ class LaporanController extends Controller
         }
     }
     public function HapusLaporan($id)
-{
+    {
     try {
         DB::table('Laporan')->where('ID_Laporan', $id)->delete();
         return redirect()->route('showHalLaporanPetani')->with('success', 'Laporan berhasil dihapus.');
     } catch (\Exception $e) {
         return back()->with('error', 'Gagal menghapus laporan: ' . $e->getMessage());
     }
-}
-
-
-    public function filterLaporan(){
+    }
+    public function filterLaporan(Request $request){
+        $query = Laporan::with('Akun');
+        if ($request->has('periode') && $request->periode != '') {
+            [$year, $month] = explode('-', $request->periode);
+            $bulanTahun = Carbon::createFromFormat('Y-m', "$year-$month")->locale('id')->translatedFormat('F Y');
+            $query->whereYear('Tanggal_Laporan', $year)
+                ->whereMonth('Tanggal_Laporan', $month);
+        }
+        $laporan = $query->get();
+        $totalSehat = $laporan->sum('Jumlah_Tumbuhan_Sehat');
+        $totalSakit = $laporan->sum('Jumlah_Tumbuhan_Sakit');
+        return view('HalLaporanPemilik', compact('laporan','bulanTahun','totalSehat','totalSakit'));
     }
 }
