@@ -22,16 +22,12 @@
         }
     </script>
 </head>
-
 <body class="font-urbanist bg-gray-100 min-h-screen">
-
     <header class="sticky top-0 z-50">
         @include("components.navbarPemilik")
     </header>
-
     <main class="p-6">
         @yield("content")
     </main>
-
 </body>
 </html>
