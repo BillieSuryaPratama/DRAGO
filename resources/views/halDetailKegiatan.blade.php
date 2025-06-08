@@ -16,7 +16,15 @@
 
         @foreach($kegiatan as $kegiatanItem)
         <div class="flex items-stretch mb-4">
-            <a href="" class="flex-1 shadow-md bg-white hover:bg-gray-300 transition rounded-lg p-4 mr-4 flex flex-col justify-center">
+            @php
+                $nonClickable = in_array($kegiatanItem->Status, ['Sudah Dikerjakan', 'Terlambat']);
+            @endphp
+
+            @if ($nonClickable)
+                <div class="flex-1 shadow-md bg-gray-100 cursor-not-allowed rounded-lg p-4 mr-4 flex flex-col justify-center opacity-70">
+            @else
+                <a href="{{ route('showHalUbahKegiatan', $kegiatanItem->ID_Penjadwalan) }}" class="flex-1 shadow-md bg-white hover:bg-gray-300 transition rounded-lg p-4 mr-4 flex flex-col justify-center">
+            @endif
                 <div class="flex flex-col">
                     <span class="text-base font-bold text-gray-700 mb-1">
                         {{ \Carbon\Carbon::parse($kegiatanItem->Tanggal)->translatedFormat('d F Y') }}
@@ -27,7 +35,11 @@
                     <span class="text-sm text-black">Kegiatan: {{ $kegiatanItem->Kegiatan }}</span>
                     <span class="text-sm text-black">Status: {{ $kegiatanItem->Status }}</span>
                 </div>
-            </a>
+            @if ($nonClickable)
+                </div>
+            @else
+                </a>
+            @endif
 
             <form id="deleteForm" action="{{ route('hapusKegiatan', $kegiatanItem->ID_Penjadwalan) }}" method="POST" class="flex items-stretch">
                 @csrf

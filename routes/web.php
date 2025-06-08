@@ -49,3 +49,5 @@ Route::get('/halTambahJadwalKegiatan', [PenjadwalanController::class, 'showHalTa
 Route::post('/tambah-jadwal', [PenjadwalanController::class, 'Simpan'])->name('SimpanJadwal');
 Route::get('/halDetailKegiatan/{id}', [PenjadwalanController::class, 'showHalDetailKegiatan'])->name('showHalDetailKegiatan');
 Route::delete('/hapus-jadwal/{id}', [PenjadwalanController::class, 'hapusKegiatan'])->name('hapusKegiatan');
+Route::get('/halUbahKegiatan/{id}', [PenjadwalanController::class, 'showHalUbahKegiatan'])->name('showHalUbahKegiatan');
+Route::post('/update-kegiatan/{id}', [PenjadwalanController::class, 'SimpanPerubahan'])->name('SimpanPerubahanKegiatan');

@@ -33,7 +33,7 @@ class Penjadwalan extends Model
             return DB::table('penjadwalan')
                 ->join('akun', 'penjadwalan.ID_Akun', '=', 'akun.ID_Akun')
                 ->select('penjadwalan.*', 'akun.Nama', 'akun.ID_Jabatan', 'akun.Status_Akun')
-                ->where('ID_Deteksi', $id)
+                ->where('ID_Penjadwalan', $id)
                 ->first();
         } else {
             return DB::table('penjadwalan')
@@ -72,5 +72,17 @@ class Penjadwalan extends Model
     public function deleteDataKegiatan($id)
     {
         DB::table('penjadwalan')->where('ID_Penjadwalan', $id)->delete();
+    }
+
+    public function updateDataKegiatan(Request $request, $id)
+    {
+        DB::table('penjadwalan')->where('ID_Penjadwalan', $id)->update([
+            'ID_Akun' => $request->ID_Akun,
+            'JamMulai' => $request->JamMulai,
+            'JamBerakhir' => $request->JamBerakhir,
+            'Kegiatan' => $request->Kegiatan,
+            'Tanggal' => $request->Tanggal,
+            'updated_at' => now(),
+        ]);
     }
 }

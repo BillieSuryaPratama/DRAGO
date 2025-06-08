@@ -12,8 +12,8 @@ class PenjadwalanController extends Controller
     public function showHalTambahJadwalKegiatan()
     {
         $petani = DB::table('akun')
-                    ->where('ID_Jabatan', 2) // Misalkan ID_Jabatan 2 adalah untuk petani
-                    ->where('Status_Akun', 1) // Hanya petani yang aktif
+                    ->where('ID_Jabatan', 2)
+                    ->where('Status_Akun', 1)
                     ->get();
         return view('halTambahJadwalKegiatan', compact('petani'));
     }
@@ -34,6 +34,16 @@ class PenjadwalanController extends Controller
     {
         $kegiatan = (new Penjadwalan())->getDataKegiatanByAkun($id);
         return view('halDetailKegiatan', compact('kegiatan'));
+    }
+
+    public function showHalUbahKegiatan($id)
+    {
+        $petani = DB::table('akun')
+                    ->where('ID_Jabatan', 2)
+                    ->where('Status_Akun', 1)
+                    ->get();
+        $kegiatan = (new Penjadwalan())->getDataKegiatan($id);
+        return view('halUbahKegiatan', compact('kegiatan', 'petani'));
     }
 
     public function Simpan(Request $request)
@@ -62,6 +72,34 @@ class PenjadwalanController extends Controller
             return back()->withErrors(['error' => 'Terjadi kesalahan saat menyimpan data.'])->withInput();
         }
     }
+
+    public function SimpanPerubahan(Request $request, $id)
+    {
+        if (empty($request->ID_Akun) || empty($request->JamMulai) || empty($request->JamBerakhir) || empty($request->Tanggal) || empty($request->Kegiatan)) {
+            return back()->withErrors(['error' => 'Data harus diisi'])->withInput();
+        }
+
+        $validator = Validator::make($request->all(), [
+            'ID_Akun' => 'required|exists:akun,ID_Akun',
+            'JamMulai' => 'required|date',
+            'JamBerakhir' => 'required|date|after:JamMulai',
+            'Tanggal' => 'required|date|after_or_equal:today',
+            'Kegiatan' => 'required|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors(['error' => 'Format data harus sesuai'])->withInput();
+        }
+
+        try {
+            $penjadwalan = new Penjadwalan();
+            $penjadwalan->updateDataKegiatan($request, $id);
+            return redirect()->route('showHalDetailKegiatan', ['id' => $request->ID_Akun])->with('success', 'Jadwal berhasil diubah.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Terjadi kesalahan saat memperbarui data.'])->withInput();
+        }
+    }
+
 
     public function HapusKegiatan($id)
     {
