@@ -24,13 +24,16 @@ class LoginController extends Controller
         $nama = session('nama');
         $id_akun = session('id_akun');
         $id_jabatan = session('id_jabatan');
-        return view('DashboardPemilik', compact('nama', 'id_akun', 'id_jabatan'));
+        $jumlahSehat = Laporan::sum('Jumlah_Tumbuhan_Sehat');
+        $jumlahSakit = Laporan::sum('Jumlah_Tumbuhan_Sakit');
+        return view('DashboardPemilik', compact('nama', 'id_akun', 'id_jabatan', 'jumlahSehat', 'jumlahSakit'));
     }
 
     public function DashboardPetani(){
         $nama = session('nama');
         $id_akun = session('id_akun');
         $id_jabatan = session('id_jabatan');
+
         return view('DashboardPetani', compact('nama', 'id_akun', 'id_jabatan'));
     }
 

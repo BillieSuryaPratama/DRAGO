@@ -46,26 +46,29 @@
         }
     });
 </script>
-<div class="w-1/2 mx-auto">
+<div class="max-w-6xl mx-auto px-4">
     @if($laporan->isEmpty())
-    <div class="col-span-full text-center text-gray-500 font-medium">
-        Tidak ada laporan yang sesuai dengan filter bulan dan tahun.
-    </div>
-    @else
-    @foreach ($laporan as $item)
-    <div class="bg-gray-200 p-4 rounded-xl shadow mt-2">
-        <h2 class="text-lg font-semibold text-gray-800 mb-2">{{ $item->Akun->Nama ?? 'Nama Tidak Ditemukan' }}</h2>
-        <div class="border-b-2 border-gray-300 mb-2"></div>
-        <div class="text-sm text-gray-700">
-            <p><span class="font-medium">Tanaman Sehat:</span> {{ $item->Jumlah_Tumbuhan_Sehat }}</p>
-            <p><span class="font-medium">Tanaman Sakit:</span> {{ $item->Jumlah_Tumbuhan_Sakit }}</p>
-            <p><span class="font-medium">Keterangan:</span> {{ $item->Keterangan }}</p>
-            <p><span class="font-medium">Tanggal:</span> {{ \Carbon\Carbon::parse($item->Tanggal_Laporan)->locale('id')->translatedFormat('d F Y') }}</p>
+        <div class="col-span-full text-center text-gray-500 font-medium">
+            Tidak ada laporan yang sesuai dengan filter bulan dan tahun.
         </div>
-    </div>
-    @endforeach
+    @else
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            @foreach ($laporan as $item)
+                <div class="bg-gray-200 p-4 rounded-xl shadow">
+                    <h2 class="text-lg font-semibold text-gray-800 mb-2">{{ $item->Akun->Nama ?? 'Nama Tidak Ditemukan' }}</h2>
+                    <div class="border-b-2 border-gray-300 mb-2"></div>
+                    <div class="text-sm text-gray-700">
+                        <p><span class="font-medium">Tanaman Sehat:</span> {{ $item->Jumlah_Tumbuhan_Sehat }}</p>
+                        <p><span class="font-medium">Tanaman Sakit:</span> {{ $item->Jumlah_Tumbuhan_Sakit }}</p>
+                        <p><span class="font-medium">Keterangan:</span> {{ $item->Keterangan }}</p>
+                        <p><span class="font-medium">Tanggal:</span> {{ \Carbon\Carbon::parse($item->Tanggal_Laporan)->locale('id')->translatedFormat('d F Y') }}</p>
+                    </div>
+                </div>
+            @endforeach
+        </div>
     @endif
 </div>
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/style.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
