@@ -28,7 +28,7 @@
         </div>
 
         <div class="flex gap-4 mt-5 ">
-            <a id="ButtonRiwayat" href="" class="bg-blue-500 hover:bg-blue-600 text-white px-20 py-2 rounded-lg font-semibold transition text-center">Lihat Riwayat</a>
+            <a id="ButtonRiwayat" href="{{ route('showHalRiwayatDeteksi') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-20 py-2 rounded-lg font-semibold transition text-center">Lihat Riwayat</a>
         </div>
     </main>
 </div>

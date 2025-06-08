@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\DeteksiPenyakit;
+use Illuminate\Support\Facades\DB;
 
 class DeteksiPenyakitController extends Controller
 {
@@ -14,12 +15,14 @@ class DeteksiPenyakitController extends Controller
 
     public function showHalRiwayatDeteksi()
     {
-        //
+        $DeteksiPenyakit = (new DeteksiPenyakit())->getDeteksiPenyakit();
+        return view('halRiwayatDeteksi', compact("DeteksiPenyakit"));
     }
 
     public function showHalDetailDeteksi($id)
     {
-        //
+        $DetailPenyakit = (new DeteksiPenyakit())->getDeteksiPenyakit($id);
+        return view('halDetailDeteksi', compact('DetailPenyakit'));
     }
 
     public function Deteksi(Request $request)
@@ -52,5 +55,8 @@ class DeteksiPenyakitController extends Controller
             'Akurasi' => $result['confidence'],
             'Tanggal_Deteksi' => now(),
         ]);
+
+        $Hasil_Deteksi = DB::getPdo()->lastInsertId();
+        return redirect()->route('showHalDetailDeteksi', ['id' => $Hasil_Deteksi]);
     }
 }

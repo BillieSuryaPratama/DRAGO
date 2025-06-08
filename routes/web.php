@@ -6,6 +6,7 @@ use App\Http\Controllers\DeteksiPenyakitController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PenjadwalanController;
+use App\Models\DeteksiPenyakit;
 
 Route::get('/', function () {
     return view('LandingPage');
@@ -31,6 +32,8 @@ Route::post('/update-akun', [AkunController::class, 'SimpanPerubahan'])->name('S
 
 Route::get('/halDeteksi', [DeteksiPenyakitController::class, 'showHalDeteksi'])->name('showHalDeteksi');
 Route::post('/proses-deteksi', [DeteksiPenyakitController::class, 'Deteksi'])->name('Deteksi');
+Route::get('/halRiwayatDeteksi', [DeteksiPenyakitController::class, 'showHalRiwayatDeteksi'])->name('showHalRiwayatDeteksi');
+Route::get('/halDetailDeteksi/{id}', [DeteksiPenyakitController::class, 'showHalDetailDeteksi'])->name('showHalDetailDeteksi');
 
 Route::get('/halLaporanPetani', [LaporanController::class, 'showHalLaporanPetani'])->name('showHalLaporanPetani');
 Route::get('/halTambahLaporan', [LaporanController::class, 'showHalTambahLaporan'])->name('showHalTambahLaporan');

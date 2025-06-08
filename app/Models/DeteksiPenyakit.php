@@ -29,6 +29,25 @@ class DeteksiPenyakit extends Model
         return $this->belongsTo(Akun::class, 'ID_Akun');
     }
 
+    public function getDeteksiPenyakit($id = null)
+    {
+        if ($id) {
+            return DB::table('deteksi_penyakit')
+                ->join('akun', 'deteksi_penyakit.ID_Akun', '=', 'akun.ID_Akun')
+                ->join('penyakit', 'deteksi_penyakit.ID_Penyakit', '=', 'penyakit.ID_Penyakit')
+                ->select('deteksi_penyakit.*', 'akun.Nama', 'penyakit.Solusi', 'penyakit.Nama_Penyakit')
+                ->where('ID_Deteksi', $id)
+                ->first();
+        } else {
+            return DB::table('deteksi_penyakit')
+                ->join('akun', 'deteksi_penyakit.ID_Akun', '=', 'akun.ID_Akun')
+                ->join('penyakit', 'deteksi_penyakit.ID_Penyakit', '=', 'penyakit.ID_Penyakit')
+                ->select('deteksi_penyakit.*', 'akun.Nama', 'penyakit.Solusi', 'penyakit.Nama_Penyakit')
+                ->orderBy('created_at', 'desc')
+                ->get();
+        }
+    }
+
     public function insertDataPenyakit($data)
     {
         DB::table('deteksi_penyakit')->insert([
