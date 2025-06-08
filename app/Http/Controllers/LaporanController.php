@@ -28,37 +28,49 @@ class LaporanController extends Controller
         return view('halTambahLaporan');
     }
     public function Simpan(Request $request){
-        $ID_Akun = session('id_akun');
-        $request->merge(['ID_Akun' => $ID_Akun]);
-        $validator = Validator::make($request->all(), [
-            'Jumlah_Tumbuhan_Sakit' => ['required', 'integer', 'min:0'],
-            'Jumlah_Tumbuhan_Sehat' => ['required', 'integer', 'min:0'],
-            'Keterangan' => ['required', 'string', 'max:255'],
-            'Tanggal_Laporan' => ['required', 'date', 'before_or_equal:today'],
-        ], [
-            'Jumlah_Tumbuhan_Sakit.required' => 'Data harus diisi',
-            'Jumlah_Tumbuhan_Sehat.required' => 'Data harus diisi',
-            'Keterangan.required' => 'Data harus diisi',
-            'Tanggal_Laporan.required' => 'Data harus diisi',
-            'Jumlah_Tumbuhan_Sakit.regex' => 'Format data harus sesuai',
-            'Jumlah_Tumbuhan_Sakit.max' => 'Format data harus sesuai',
-            'Jumlah_Tumbuhan_Sehat.max' => 'Format data harus sesuai',
-            'Keterangan.max' => 'Format data harus sesuai',
-            'Tanggal_Laporan.before_or_equal' => 'Format data harus sesuai',
-            ]);
+    $ID_Akun = session('id_akun');
+    $request->merge(['ID_Akun' => $ID_Akun]);
 
-            if ($validator->fails()) {
-                return back()->withErrors($validator)->withInput();
-            }
+    $validator = Validator::make($request->all(), [
+        'Jumlah_Tumbuhan_Sakit' => ['required', 'integer', 'min:0'],
+        'Jumlah_Tumbuhan_Sehat' => ['required', 'integer', 'min:0'],
+        'Keterangan' => ['required', 'string', 'max:255'],
+        'Tanggal_Laporan' => ['required', 'date', 'before_or_equal:today'],
+    ], [
+        'Jumlah_Tumbuhan_Sakit.required' => 'Data harus diisi',
+        'Jumlah_Tumbuhan_Sehat.required' => 'Data harus diisi',
+        'Keterangan.required' => 'Data harus diisi',
+        'Tanggal_Laporan.required' => 'Data harus diisi',
+        'Jumlah_Tumbuhan_Sakit.regex' => 'Format data harus sesuai',
+        'Jumlah_Tumbuhan_Sakit.max' => 'Format data harus sesuai',
+        'Jumlah_Tumbuhan_Sehat.max' => 'Format data harus sesuai',
+        'Keterangan.max' => 'Format data harus sesuai',
+        'Tanggal_Laporan.before_or_equal' => 'Format data harus sesuai',
+    ]);
 
-            try {
-                $laporan = new Laporan();
-                $laporan->insertDataLaporan($request);
-                return redirect()->route('showHalLaporanPetani')->with('success', 'Data berhasil ditambah.');
-            } catch (\Exception $e) {
-                return back()->withErrors(['error' => 'Terjadi kesalahan saat menyimpan data.'])->withInput();
-        }
+    if ($validator->fails()) {
+        return back()->withErrors($validator)->withInput();
     }
+    $tanggal = $request->input('Tanggal_Laporan');
+    $laporanExist = Laporan::where('ID_Akun', $ID_Akun)
+                        ->whereDate('Tanggal_Laporan', $tanggal)
+                        ->exists();
+
+    if ($laporanExist) {
+        return back()->withErrors([
+            'Tanggal_Laporan' => 'Format data harus sesuai (laporan untuk tanggal ini sudah ada).'
+        ])->withInput();
+    }
+
+    try {
+        $laporan = new Laporan();
+        $laporan->insertDataLaporan($request);
+        return redirect()->route('showHalLaporanPetani')->with('success', 'Data berhasil ditambah.');
+    } catch (\Exception $e) {
+        return back()->withErrors(['error' => 'Terjadi kesalahan saat menyimpan data.'])->withInput();
+    }
+    }
+
     public function showHalDetailLaporan($id){
         $laporan = (new Laporan())->getDatalaporan($id);
         return view('halDetailLaporan', compact('laporan'));
@@ -79,18 +91,23 @@ class LaporanController extends Controller
             'Jumlah_Tumbuhan_Sehat.max' => 'Format data harus sesuai',
             'Keterangan.max' => 'Format data harus sesuai',
             'Tanggal_Laporan.before_or_equal' => 'Format data harus sesuai',
-            ]);
-
-            if ($validator->fails()) {
-                return back()->withErrors($validator)->withInput();
-            }
-
-            try {
-                $laporan = new Laporan();
-                $laporan->updateDataLaporan($request);
-                return redirect()->route('showHalLaporanPetani')->with('success', 'Data berhasil diubah');
-            } catch (\Exception $e) {
-                return back()->withErrors(['error' => 'Terjadi kesalahan saat menyimpan data.'])->withInput();
+        ]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+        $ID_Akun =session('id_akun');
+        $tanggal = $request->input('Tanggal_Laporan');
+        $laporanExist = Laporan::where('ID_Akun', $ID_Akun)
+            ->whereDate('Tanggal_Laporan', $tanggal)
+            ->exists();
+        if ($laporanExist) {
+            return back()->withErrors(['Tanggal_Laporan' => 'Format data harus sesuai (laporan untuk tanggal ini sudah ada).'])->withInput();}
+        try {
+            $laporan = new Laporan();
+            $laporan->updateDataLaporan($request);
+            return redirect()->route('showHalLaporanPetani')->with('success', 'Data berhasil diubah');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Terjadi kesalahan saat menyimpan data.'])->withInput();
         }
     }
     public function HapusLaporan($id)
