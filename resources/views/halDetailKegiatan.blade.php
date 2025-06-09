@@ -10,8 +10,12 @@
 <div class="container flex justify-center">
     <div class="w-full max-w-4xl">
         <div class="mb-6">
-            <h2 class="text-2xl font-bold">{{ $kegiatan[0]->Nama }}</h2>
-            <p class="text-lg font-semibold text-gray-700">Jadwal Kegiatan</p>
+            @if ($kegiatan->isEmpty())
+                <h2 class="text-2xl font-bold">Tidak ada kegiatan yang tersedia.</h2>
+            @else
+                <h2 class="text-2xl font-bold">{{ $kegiatan[0]->Nama }}</h2>
+                <p class="text-lg font-semibold text-gray-700">Jadwal Kegiatan</p>
+            @endif
         </div>
 
         @foreach($kegiatan as $kegiatanItem)
@@ -41,10 +45,10 @@
                 </a>
             @endif
 
-            <form id="deleteForm" action="{{ route('hapusKegiatan', $kegiatanItem->ID_Penjadwalan) }}" method="POST" class="flex items-stretch">
+            <form action="{{ route('hapusKegiatan', $kegiatanItem->ID_Penjadwalan) }}" method="POST" class="deleteForm flex items-stretch" data-id="{{ $kegiatanItem->ID_Penjadwalan }}">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="bg-red-700 hover:bg-red-800 text-white px-4 rounded w-full h-full">
+                <button type="button" class="deleteButton bg-red-700 hover:bg-red-800 text-white px-4 rounded w-full h-full">
                     Hapus Jadwal
                 </button>
             </form>
@@ -67,25 +71,30 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const deleteBtn = document.getElementById('deleteButton');
         const modal = document.getElementById('deleteModal');
         const cancelBtn = document.getElementById('cancelDelete');
         const confirmBtn = document.getElementById('confirmDelete');
-        const deleteForm = document.getElementById('deleteForm');
+        let selectedForm = null;
+        const deleteButtons = document.querySelectorAll('.deleteButton');
 
-        deleteBtn.addEventListener('click', () => {
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+        deleteButtons.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                selectedForm = btn.closest('.deleteForm');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            });
         });
 
         cancelBtn.addEventListener('click', () => {
             modal.classList.add('hidden');
             modal.classList.remove('flex');
-            window.location.href = "{{ route('showHalPetani') }}";
+            selectedForm = null;
         });
 
         confirmBtn.addEventListener('click', () => {
-            deleteForm.submit();
+            if (selectedForm) {
+                selectedForm.submit();
+            }
         });
     });
 </script>
