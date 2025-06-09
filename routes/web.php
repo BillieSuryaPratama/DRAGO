@@ -6,11 +6,8 @@ use App\Http\Controllers\DeteksiPenyakitController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PenjadwalanController;
-use App\Models\DeteksiPenyakit;
 
-Route::get('/', function () {
-    return view('LandingPage');
-});
+Route::get('/', [LoginController::class, 'showLandingPage']);
 
 Route::get('/Login', [LoginController::class, 'showHalLogin'])->name('showHalLogin');
 Route::get('/LupaPassword', [LoginController::class, 'showHalLupaPassword'])->name('showHalLupaPassword');

@@ -12,6 +12,13 @@ use App\Models\Laporan;
 
 class LoginController extends Controller
 {
+    public function showLandingPage()
+    {
+        $deteksiPenyakit = (new DeteksiPenyakit())->getDataPenyakit()->take(3);
+        return view('LandingPage', compact('deteksiPenyakit'));
+    }
+
+
     public function showHalLogin(){
         return view('halLogin');
     }
