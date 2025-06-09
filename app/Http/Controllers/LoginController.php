@@ -26,15 +26,22 @@ class LoginController extends Controller
         $id_jabatan = session('id_jabatan');
         $jumlahSehat = Laporan::sum('Jumlah_Tumbuhan_Sehat');
         $jumlahSakit = Laporan::sum('Jumlah_Tumbuhan_Sakit');
-        return view('DashboardPemilik', compact('nama', 'id_akun', 'id_jabatan', 'jumlahSehat', 'jumlahSakit'));
+        $Penjadwalan = (new Penjadwalan())->getDataKegiatan();
+        $JadwalHariIni = $Penjadwalan->filter(function($item) {
+            return $item->Tanggal === now()->toDateString();
+        });
+        return view('DashboardPemilik', compact('nama', 'id_akun', 'id_jabatan', 'jumlahSehat', 'jumlahSakit', 'JadwalHariIni'));
     }
 
     public function DashboardPetani(){
         $nama = session('nama');
         $id_akun = session('id_akun');
         $id_jabatan = session('id_jabatan');
-
-        return view('DashboardPetani', compact('nama', 'id_akun', 'id_jabatan'));
+        $Penjadwalan = (new Penjadwalan())->getDataKegiatan();
+        $JadwalHariIni = $Penjadwalan->filter(function($item) use ($id_akun) {
+            return $item->Tanggal === now()->toDateString() && $item->ID_Akun == $id_akun;
+        });
+        return view('DashboardPetani', compact('nama', 'id_akun', 'id_jabatan', 'JadwalHariIni'));
     }
 
     public function cekDataAkun($username, $password) {
@@ -51,28 +58,28 @@ class LoginController extends Controller
         if (empty($request->username) || empty($request->password)) {
             return back()->withErrors(['error' => 'Data harus diisi'])->withInput();
         }
-
         $request->validate([
             'username' => 'required|string',
             'password' => 'required|string',
         ]);
         $akun = $this->cekDataAkun($request->username, $request->password);
-        if ($akun) {
+
+        if ($akun && $akun->Status_Akun == 1) {
             session([
                 'id_akun' => $akun->ID_Akun,
                 'nama' => $akun->Nama,
                 'id_jabatan' => $akun->ID_Jabatan,
             ]);
-
             if ($akun->ID_Jabatan == 2) {
-                return redirect()->route('DashboardPetani');;
+                return redirect()->route('DashboardPetani');
             } elseif ($akun->ID_Jabatan == 1) {
-                return redirect()->route('DashboardPemilik');;
+                return redirect()->route('DashboardPemilik');
             }
         } else {
-            return back()->withErrors(['username' => 'Format data harus sesuai']);
+            return back()->withErrors(['error' => 'Format data harus sesuai']);
         }
     }
+
 
     public function Logout(Request $request)
     {
