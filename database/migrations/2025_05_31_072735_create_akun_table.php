@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('Username', 20)
                 ->unique();
             $table->string('Email', 255);
-            $table->string('Sandi', 15);
+            $table->string('Sandi', 255);
             $table->boolean('Status_Akun')
                 ->default(true);
             $table->timestamps();

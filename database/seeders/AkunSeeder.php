@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Akun;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Crypt;
 
 class AkunSeeder extends Seeder
 {
@@ -64,7 +65,7 @@ class AkunSeeder extends Seeder
                 'Nomor_HP' => $item['Nomor_HP'],
                 'Username' => $item['Username'],
                 'Email' => $item['Email'],
-                'Sandi' => $item['Sandi'],
+                'Sandi' => Crypt::encrypt($item['Sandi']),
                 'Status_Akun' => $item['Status_Akun']
             ]);
         }

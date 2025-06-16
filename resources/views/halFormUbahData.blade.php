@@ -42,7 +42,7 @@
                         <input type="email" name="Email" value="{{ old('Email', $akun->Email) }}" class="w-full border border-pink-600 rounded px-3 py-2 mt-1">
 
                         <label class="block font-semibold text-gray-700 mt-4">Sandi</label>
-                        <input type="text" name="Sandi" value="{{ old('Sandi', $akun->Sandi) }}" class="w-full border border-pink-600 rounded px-3 py-2 mt-1">
+                        <input type="password" name="Sandi" value="{{ old('Sandi', $akun->Sandi) }}" class="w-full border border-pink-600 rounded px-3 py-2 mt-1">
                     </div>
                 </div>
 

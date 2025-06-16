@@ -9,6 +9,7 @@ use App\Models\Akun;
 use App\Models\DeteksiPenyakit;
 use App\Models\Penjadwalan;
 use App\Models\Laporan;
+use Illuminate\Support\Facades\Crypt;
 
 class LoginController extends Controller
 {
@@ -54,8 +55,15 @@ class LoginController extends Controller
     public function cekDataAkun($username, $password) {
         $akunList = (new Akun())->getDataAkun();
         $akun = $akunList->firstWhere('Username', $username);
-        if ($akun && $akun->Sandi === $password) {
-            return $akun;
+        if ($akun) {
+            try {
+                $decryptedPassword = Crypt::decrypt($akun->Sandi);
+                if ($decryptedPassword === $password) {
+                    return $akun;
+                }
+            } catch (\Exception $e) {
+                return null;
+            }
         }
         return null;
     }
@@ -118,7 +126,7 @@ class LoginController extends Controller
 
         $akun = Akun::where('Username', $request->username)->first();
         if ($akun) {
-            $akun->Sandi = $request->password;
+            $akun->Sandi = Crypt::encrypt($request->password);
             $akun->save();
             return redirect()->route('showHalLogin')->with('success', 'Password berhasil diubah.');
         } else {

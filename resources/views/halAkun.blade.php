@@ -40,7 +40,7 @@
                 <input type="text" value="{{ $akun->Email }}" class="w-full border border-pink-600 rounded px-3 py-2 mt-1" disabled>
 
                 <label class="block font-semibold text-gray-700 mt-4">Sandi</label>
-                <input type="text" value="{{ $akun->Sandi }}" class="w-full border border-pink-600 rounded px-3 py-2 mt-1" disabled>
+                <input type="password" value="********" class="w-full border border-pink-600 rounded px-3 py-2 mt-1" disabled>
             </div>
         </div>
 

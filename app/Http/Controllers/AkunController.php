@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Akun;
+use Illuminate\Support\Facades\Crypt;
 
 class AkunController extends Controller
 {
@@ -38,6 +39,11 @@ class AkunController extends Controller
     public function showHalFormUbahData($id)
     {
         $akun = (new Akun())->getDataAkun($id);
+        try {
+            $akun->Sandi = Crypt::decrypt($akun->Sandi);
+        } catch (\Exception $e) {
+            $akun->Sandi = '';
+        }
         return view('halFormUbahData', compact('akun'));
     }
 
@@ -59,11 +65,10 @@ class AkunController extends Controller
         if ($validator->fails()) {
             return back()->withErrors(['error' => 'Format data harus sesuai'])->withInput();
         }
-
         try {
             $akun = new Akun();
+            $request->merge(['Sandi' => Crypt::encrypt($request->Sandi)]);
             $akun->insertDataAkun($request);
-
             return redirect()->route('showHalPetani')->with('success', 'Data berhasil ditambah.');
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Format data harus sesuai'])->withInput();
@@ -92,9 +97,9 @@ class AkunController extends Controller
 
         try {
             $akun = new Akun();
+            $request->merge(['Sandi' => Crypt::encrypt($request->Sandi)]);
             $akun->updateDataAkun($request, $id_akun);
             $id_jabatan = session('id_jabatan');
-
             if ($id_jabatan == 1) {
                 return redirect()->route('showHalAkunPemilik')->with('success', 'Akun berhasil diubah.');
             } else {
